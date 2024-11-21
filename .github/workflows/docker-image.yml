@@ -25,6 +25,6 @@ jobs:
       run: |
         echo "IMAGE_TAG=$(date +%s)" >> $GITHUB_ENV
         docker build . --file Dockerfile --tag ghcr.io/tiszolczijacint/test-azure-webapp:$IMAGE_TAG
-        docker login ghcr.io -u --p ${{secrets.GHCR_TOKEN}}
+        docker login ghcr.io -u -p ${{secrets.GHCR_TOKEN}}
         docker push
     
