@@ -28,4 +28,12 @@ jobs:
         docker login ghcr.io -u tiszolczijacint -p ${{secrets.GHCR_TOKEN}}
         docker push ghcr.io/tiszolczijacint/test-azure-webapp:$IMAGE_TAG
         docker push ghcr.io/tiszolczijacint/test-azure-webapp:latest
-    
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'WebAppTestVevo'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_efc50cf8eaeb4b099a1363252829edea }}
+        images: 'ghcr.io/tiszolczijacint/test-azure-webapp:${{ env.IMAGE_TAG }}'
